@@ -18,8 +18,11 @@ public class Store {
 
     private String name;
 
+    @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name = "store_product",
             joinColumns = @JoinColumn(name = "store_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id"))
     private Set<Product> products = new HashSet<>();
+
+
 }

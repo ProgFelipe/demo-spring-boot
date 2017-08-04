@@ -24,9 +24,6 @@ public class Product {
 
    private String url;
 
-   @OneToOne
-   private Category category;
-
    @ManyToMany(mappedBy = "products")
-   private Set<Store> stores = new HashSet<>();
+   private Set<Store> stores;
 }
