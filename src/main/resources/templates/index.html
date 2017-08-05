@@ -2,12 +2,19 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Title</title>
+    <title>Stores</title>
 </head>
 <body>
 <h1 style="align-content: center">DEAM!! I'm good!</h1>
 <ul>
-    <li th:each="store : ${stores}" th:text="${store.name}">item name</li>
+    <li th:each="store : ${stores}">
+        <h1 th:text="${store.name}"/>
+        <ul th:each="product : ${store.getProducts()}">
+            <h2 th:text="${product.name}"/>
+            <p th:text="${product.getPrice()}"/>
+            <img th:src="${product.getUrl()}"/>
+        </ul>
+    </li>
 </ul>
 </body>
 </html>

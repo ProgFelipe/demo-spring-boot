@@ -7,8 +7,17 @@ import lombok.Synchronized;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 @Component
 public class StoreToStoreCommand implements Converter<Store, StoreCommand> {
+
+    public StoreToStoreCommand(ProductToProductCommand productToProductCommand) {
+        this.productToProductCommand = productToProductCommand;
+    }
+
+    private ProductToProductCommand productToProductCommand;
 
     @Synchronized
     @Nullable
@@ -20,6 +29,10 @@ public class StoreToStoreCommand implements Converter<Store, StoreCommand> {
 
         final StoreCommand storeCommand = new StoreCommand();
 
+        storeCommand.setProducts(StreamSupport.stream(store.getProducts()
+                .spliterator(), false)
+                .map(productToProductCommand::convert)
+                .collect(Collectors.toSet()));
         storeCommand.setName(store.getName());
         storeCommand.setId(store.getId());
 
